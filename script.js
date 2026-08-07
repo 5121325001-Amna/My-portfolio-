@@ -1,215 +1,256 @@
-// 1. LOADER
+// ========== LOADER ==========
 window.addEventListener('load', () => {
-  setTimeout(() => document.querySelector('.loader').classList.add('hidden'), 800);
+  const loader = document.querySelector('.loader');
+  loader.style.opacity = '0';
+  setTimeout(() => loader.style.display = 'none', 500);
 });
 
-// 2. MOUSE GLOW EFFECT
-const glow = document.querySelector('.mouse-glow');
-if (glow) {
-  document.addEventListener('mousemove', e => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
-  });
-}
-
-// 3. THEME TOGGLE - Dark / Light
+// ========== THEME TOGGLE ==========
 const themeToggle = document.querySelector('.theme-toggle');
+const html = document.documentElement;
+
 const savedTheme = localStorage.getItem('theme') || 'dark';
-document.documentElement.setAttribute('data-theme', savedTheme);
+html.setAttribute('data-theme', savedTheme);
+themeToggle.textContent = savedTheme === 'dark'? '☀️' : '🌙';
 
-function updateThemeIcon(theme) {
-  if (themeToggle) themeToggle.textContent = theme === 'dark'? '☀️' : '🌙';
-}
-updateThemeIcon(savedTheme);
+themeToggle.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark'? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  themeToggle.textContent = next === 'dark'? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+});
 
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    const newTheme = document.documentElement.getAttribute('data-theme') === 'dark'? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
+// ========== MOBILE NAVBAR / HAMBURGER ==========
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+
+// Close menu when clicking a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('active');
   });
-}
+});
 
-// 4. TERMINAL TYPING EFFECT
-const terminal = document.getElementById('terminal');
-if (terminal) {
-  const commands = {
-    whoami: "Amna Aqeel — Software Engineering Student",
-    skills: "Java, C++, OOP, HTML, CSS, JavaScript",
-    certifications: "Prompt Engineering, Intro to SE, HTML/CSS/JS, Cyber Security",
-    contact: "5121325001@student.iiui.edu.pk"
-  };
-  const MAX_TERMINAL_LINES = 8;
-  let cmdIndex = 0;
-  function typeCmd() {
-    const keys = Object.keys(commands);
-    if (cmdIndex >= keys.length) cmdIndex = 0;
-    const key = keys[cmdIndex];
-    const block = document.createElement('div');
-    block.innerHTML = `<div>&gt; ${key}</div><div style="color:var(--sage)">${commands[key]}</div>`;
-    terminal.appendChild(block);
-    while (terminal.children.length > MAX_TERMINAL_LINES) {
-      terminal.removeChild(terminal.firstChild);
-    }
-    terminal.scrollTop = terminal.scrollHeight;
-    cmdIndex++;
-    setTimeout(typeCmd, 2500);
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!hamburger.contains(e.target) &&!navLinks.contains(e.target)) {
+    navLinks.classList.remove('active');
   }
-  typeCmd();
-}
+});
 
-// 5. SCROLL REVEAL ANIMATION
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, idx) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), idx * 100);
+// ========== BACK TO TOP BUTTON ==========
+const backToTop = document.querySelector('.back-to-top');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 500) {
+    backToTop.style.display = 'block';
+  } else {
+    backToTop.style.display = 'none';
+  }
+});
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ========== MOUSE GLOW EFFECT ==========
+document.addEventListener('mousemove', e => {
+  const glow = document.querySelector('.mouse-glow');
+  glow.style.left = e.clientX - 200 + 'px';
+  glow.style.top = e.clientY - 200 + 'px';
+});
+
+// ========== TYPING ANIMATION IN TERMINAL ==========
+const terminal = document.getElementById('terminal');
+const terminalLines = [
+  '$ whoami',
+  'Amna Aqeel',
+  '$ cat skills.txt',
+  'Java, C++, OOP, HTML, CSS, JavaScript',
+  '$ status',
+  'Open to Internships & Collaborations'
+];
+let line = 0;
+let char = 0;
+
+function typeTerminal() {
+  if (line < terminalLines.length) {
+    if (char < terminalLines[line].length) {
+      terminal.innerHTML += terminalLines[line].charAt(char);
+      char++;
+      setTimeout(typeTerminal, 50);
+    } else {
+      terminal.innerHTML += '<br>';
+      line++;
+      char = 0;
+      setTimeout(typeTerminal, 500);
     }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  }
+}
+setTimeout(typeTerminal, 1500);
 
-// 6. PROJECT MODAL POPUP
+// ========== PROJECT MODAL ==========
 const projectData = {
   banking: {
     title: "GUI Banking Application",
-    desc: "Full desktop banking system built in Core Java",
-    problem: "Manual banking was slow and error prone",
-    solution: "Built OOP system with Swing GUI for deposits, withdrawals, and transfers",
-    learn: "Mastered inheritance, polymorphism, and GUI event handling"
+    desc: "A full-featured desktop banking system built with Core Java and Swing.",
+    problem: "Needed a way to simulate real banking operations for OOP practice.",
+    solution: "Built login, deposit, withdraw, and balance check using OOP principles and file handling.",
+    learn: "Mastered Java Swing, OOP, and exception handling."
   },
   student: {
     title: "Student Record Management",
-    desc: "Console C++ application",
-    problem: "Tracking student data manually in files",
-    solution: "File handling for CRUD operations: add, delete, search students",
-    learn: "Pointers, file I/O, and modular programming"
+    desc: "Console-based C++ application for managing student data.",
+    problem: "Manual record keeping was inefficient and error-prone.",
+    solution: "Created CRUD operations with file handling to store data persistently.",
+    learn: "Learned file I/O, structs, and modular programming in C++."
   },
   portfolio: {
     title: "Personal Portfolio Website",
-    desc: "This site — a fully responsive, interactive portfolio",
-    problem: "Needed a single place to showcase real projects, skills, and certifications to recruiters",
-    solution: "Built with HTML, CSS, and JavaScript — dark/light themes, scroll animations, an editable CV, and direct links to live project code",
-    learn: "Responsive layout, accessibility, and deploying via GitHub Pages"
+    desc: "Responsive portfolio with dark/light theme and smooth animations.",
+    problem: "Needed a professional way to showcase projects and skills.",
+    solution: "Built from scratch using HTML, CSS, JS with responsive design.",
+    learn: "Improved in responsive design, UI/UX, and deployment on GitHub Pages."
   }
 };
 
 const projectModal = document.getElementById('projectModal');
-function openProjectModal(row) {
-  const data = projectData[row.dataset.project];
-  if (!data) return;
-  document.getElementById('modalTitle').textContent = data.title;
-  document.getElementById('modalDesc').textContent = data.desc;
-  document.getElementById('modalProblem').textContent = data.problem;
-  document.getElementById('modalSolution').textContent = data.solution;
-  document.getElementById('modalLearn').textContent = data.learn;
-  projectModal.classList.add('open');
-}
-
 document.querySelectorAll('.project-row').forEach(row => {
-  row.addEventListener('click', (e) => {
-    if (e.target.closest('a')) return;
-    openProjectModal(row);
-  });
-  row.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      openProjectModal(row);
-    }
+  row.addEventListener('click', () => {
+    const key = row.dataset.project;
+    const data = projectData[key];
+    document.getElementById('modalTitle').textContent = data.title;
+    document.getElementById('modalDesc').textContent = data.desc;
+    document.getElementById('modalProblem').textContent = data.problem;
+    document.getElementById('modalSolution').textContent = data.solution;
+    document.getElementById('modalLearn').textContent = data.learn;
+    projectModal.style.display = 'flex';
   });
 });
-if (projectModal) {
-  projectModal.querySelector('.close-modal').addEventListener('click', () => projectModal.classList.remove('open'));
-  projectModal.addEventListener('click', (e) => { if (e.target === projectModal) projectModal.classList.remove('open'); });
-}
 
-// 7. CV MODAL + EDIT + SAVE TO LOCALSTORAGE
+document.querySelector('#projectModal.close-modal').addEventListener('click', () => {
+  projectModal.style.display = 'none';
+});
+projectModal.addEventListener('click', (e) => {
+  if (e.target === projectModal) projectModal.style.display = 'none';
+});
+
+// ========== CV MODAL + EDIT FEATURE ==========
 const cvModal = document.getElementById('cvModal');
-document.getElementById('openCV').addEventListener('click', () => cvModal.classList.add('open'));
-document.getElementById('closeCV').addEventListener('click', () => cvModal.classList.remove('open'));
-cvModal.addEventListener('click', (e) => { if (e.target === cvModal) cvModal.classList.remove('open'); });
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    projectModal?.classList.remove('open');
-    cvModal?.classList.remove('open');
-  }
-});
-
-// CV EDIT FUNCTIONALITY
-const editableIds = ['cvName', 'cvRole', 'cvEducation', 'cvSkills', 'cvProjects', 'cvCerts'];
+const openCV = document.getElementById('openCV');
+const closeCV = document.getElementById('closeCV');
 const editToggle = document.getElementById('editToggle');
 const saveCV = document.getElementById('saveCV');
 const resetCV = document.getElementById('resetCV');
-const editHint = document.getElementById('editHint');
+const exportCV = document.getElementById('exportCV');
+const importFile = document.getElementById('importFile');
 
+const cvElements = ['cvName', 'cvRole', 'cvEducation', 'cvSkills', 'cvProjects', 'cvCerts'];
 const originalCV = {};
-editableIds.forEach(id => {
-  const el = document.getElementById(id);
-  if (el) originalCV[id] = el.innerHTML;
+
+// Save original on load
+window.addEventListener('load', () => {
+  cvElements.forEach(id => {
+    originalCV[id] = document.getElementById(id).innerHTML;
+  });
+  loadCVFromStorage();
 });
 
-function loadSavedCV() {
-  const saved = localStorage.getItem('amna_cv_data');
+openCV.addEventListener('click', () => cvModal.style.display = 'flex');
+closeCV.addEventListener('click', () => cvModal.style.display = 'none');
+cvModal.addEventListener('click', (e) => {
+  if (e.target === cvModal) cvModal.style.display = 'none';
+});
+
+// Edit Toggle
+let isEditing = false;
+editToggle.addEventListener('click', () => {
+  isEditing =!isEditing;
+  cvElements.forEach(id => {
+    document.getElementById(id).contentEditable = isEditing;
+  });
+  editToggle.style.display = isEditing? 'none' : 'inline-block';
+  saveCV.style.display = isEditing? 'inline-block' : 'none';
+  document.getElementById('editHint').style.display = isEditing? 'block' : 'none';
+});
+
+// Save CV to localStorage
+saveCV.addEventListener('click', () => {
+  const cvData = {};
+  cvElements.forEach(id => {
+    cvData[id] = document.getElementById(id).innerHTML;
+  });
+  localStorage.setItem('cvData', JSON.stringify(cvData));
+  alert('CV Saved! Changes will appear next time you open it.');
+  editToggle.click(); // exit edit mode
+});
+
+// Reset CV
+resetCV.addEventListener('click', () => {
+  if (confirm('Reset CV to original?')) {
+    cvElements.forEach(id => {
+      document.getElementById(id).innerHTML = originalCV[id];
+    });
+    localStorage.removeItem('cvData');
+  }
+});
+
+// Load CV from localStorage
+function loadCVFromStorage() {
+  const saved = localStorage.getItem('cvData');
   if (saved) {
-    const data = JSON.parse(saved);
-    editableIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el && data[id]) el.innerHTML = data[id];
+    const cvData = JSON.parse(saved);
+    cvElements.forEach(id => {
+      if (cvData[id]) document.getElementById(id).innerHTML = cvData[id];
     });
   }
 }
-loadSavedCV();
 
-let isEditing = false;
-if (editToggle) {
-  editToggle.addEventListener('click', () => {
-    isEditing =!isEditing;
-    editableIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.contentEditable = isEditing;
-    });
-    saveCV.style.display = isEditing? 'inline-flex' : 'none';
-    editToggle.textContent = isEditing? '✓ Done Editing' : '✎ Edit CV';
-    editHint.textContent = isEditing? 'Now you can click and edit any text above' : 'Click "Edit CV" to update this after adding new skills or certifications.';
+// Export CV as JSON
+exportCV.addEventListener('click', () => {
+  const cvData = {};
+  cvElements.forEach(id => {
+    cvData[id] = document.getElementById(id).innerHTML;
   });
-}
+  const blob = new Blob([JSON.stringify(cvData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Amna_CV_Data.json';
+  a.click();
+});
 
-if (saveCV) {
-  saveCV.addEventListener('click', () => {
-    const data = {};
-    editableIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) data[id] = el.innerHTML;
+// Import CV from JSON
+importFile.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const cvData = JSON.parse(event.target.result);
+    cvElements.forEach(id => {
+      if (cvData[id]) document.getElementById(id).innerHTML = cvData[id];
     });
-    localStorage.setItem('amna_cv_data', JSON.stringify(data));
-    alert('CV Saved to this browser! Use Export to download a backup.');
-  });
-}
+    localStorage.setItem('cvData', JSON.stringify(cvData));
+    alert('CV Imported Successfully!');
+  };
+  reader.readAsText(file);
+});
 
-if (resetCV) {
-  resetCV.addEventListener('click', () => {
-    if (confirm('Reset CV to original?')) {
-      editableIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = originalCV[id];
-      });
-      localStorage.removeItem('amna_cv_data');
+// ========== REVEAL ON SCROLL ANIMATION ==========
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
     }
   });
-}
+}, { threshold: 0.1 });
 
-// 8. BACK TO TOP BUTTON
-const backToTop = document.querySelector('.back-to-top');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    backToTop.classList.add('show');
-  } else {
-    backToTop.classList.remove('show');
-  }
+document.querySelectorAll('.reveal').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(30px)';
+  el.style.transition = 'all 0.6s ease';
+  observer.observe(el);
 });
-if (backToTop) {
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
