@@ -14,6 +14,9 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .loader-text { font-family: 'Fraunces', serif; font-size: 2.5rem; color: var(--accent); }
 
 .navbar { position: fixed; top: 0; width: 100%; backdrop-filter: blur(20px); background: rgba(10,10,10,0.5); z-index: 1000; border-bottom: 1px solid var(--border); }
+:root[data-theme="light"] .navbar { /* FIX: light mode navbar */
+  background: rgba(255,255,255,0.7);
+}
 .nav-inner { max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; }
 .logo { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: var(--accent); text-decoration: none; }
 .nav-links { display: flex; gap: 32px; }
@@ -83,7 +86,7 @@ main { padding-top: 100px; }
 @media (min-width: 768px) {
  .metrics { grid-template-columns: repeat(4, 1fr); padding: 0; }
  .hero-cta { flex-direction: row; padding: 0; }
- .hero-cta.btn { flex: 1; }
+ .hero-cta .btn { flex: 1; } /* FIX: added space */
  .about-grid { grid-template-columns: 1fr 1fr; gap: 60px; }
  .skill-grid,.cert-row { grid-template-columns: repeat(2, 1fr); }
  .contact-grid { grid-template-columns: repeat(2, 1fr); }
