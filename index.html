@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Amna Aqeel — Software Engineering student at IIUI. Java, C++, OOP & web development portfolio.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+<title>Amna Aqeel | Software Engineering Student</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="loader"><div class="loader-text">Amna Aqeel</div></div>
+<div class="mouse-glow"></div>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="#" class="logo">AA</a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span class="status-badge"><span class="dot-pulse"></span> Open to Internships</span>
+    <button class="theme-toggle" aria-label="Toggle theme">☀️</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow reveal">Hi, my name is</p>
+    <h1 class="hero-title reveal">Amna Aqeel.</h1>
+    <p class="hero-desc reveal">Software Engineering student at IIUI. I specialize in Java, OOP, and creating intuitive applications.</p>
+
+    <div class="metrics reveal">
+      <div><strong>4.0</strong><span>CGPA</span></div>
+      <div><strong>3</strong><span>Projects Built</span></div>
+      <div><strong>4</strong><span>Certifications</span></div>
+      <div><strong>2nd</strong><span>Semester</span></div>
+    </div>
+
+    <div class="hero-cta reveal">
+      <button class="btn btn-primary" id="openCV">View CV 📄</button>
+      <a href="Amna_Aqeel_Resume.pdf" download class="btn btn-secondary">Download Resume ↓</a>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <p class="eyebrow reveal">01 — About</p>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <h2>About Me</h2>
+        <p>I'm a Software Engineering student passionate about building software that's both functional and beautiful. I love turning complex problems into simple, elegant solutions.</p>
+        <p>Right now I'm focused on mastering Data Structures, Algorithms, and building full-stack projects.</p>
+
+        <div class="tech-list reveal">
+          <p class="tech-list-caption">What I've actually applied these in — not a self-rated score:</p>
+          <div class="tech-row"><span class="tech-name">Java &amp; OOP</span><span class="tech-evidence">GUI Banking Application — full desktop app</span></div>
+          <div class="tech-row"><span class="tech-name">C++</span><span class="tech-evidence">Student Record Management System — file handling &amp; CRUD</span></div>
+          <div class="tech-row"><span class="tech-name">HTML / CSS / JS</span><span class="tech-evidence">This Portfolio Website — built &amp; deployed from scratch</span></div>
+        </div>
+      </div>
+      <div class="terminal reveal">
+        <div class="terminal-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+        <div class="terminal-body" id="terminal"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <p class="eyebrow reveal">02 — Skills</p>
+    <h2 class="reveal">What I Work With</h2>
+    <div class="skill-grid">
+      <div class="skill-card reveal"><h3>Languages</h3><p>Java, C++, HTML5, CSS3, JavaScript</p></div>
+      <div class="skill-card reveal"><h3>Concepts</h3><p>OOP, Data Structures, Algorithms, DBMS</p></div>
+      <div class="skill-card reveal"><h3>Tools</h3><p>VS Code, Git, GitHub, IntelliJ IDEA</p></div>
+      <div class="skill-card reveal"><h3>Soft Skills</h3><p>Problem Solving, Teamwork, Communication</p></div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <p class="eyebrow reveal">03 — Projects</p>
+    <h2 class="reveal">Things I've Built</h2>
+    <div class="project-list">
+      <div class="project-row reveal" data-project="banking" tabindex="0" role="button" aria-haspopup="dialog">
+        <div>
+          <div class="project-title">GUI Banking Application</div>
+          <div class="project-desc">Core Java desktop app with login, deposit, withdraw using OOP</div>
+          <div class="tags"><span>Java</span><span>OOP</span><span>Swing</span><button class="mini-btn">Case Study →</button><a href="https://github.com/5121325001-Amna/Banking-System" target="_blank" rel="noopener" class="mini-btn">⭐ View Code</a></div>
+        </div>
+      </div>
+      <div class="project-row reveal" data-project="student" tabindex="0" role="button" aria-haspopup="dialog">
+        <div>
+          <div class="project-title">Student Record Management</div>
+          <div class="project-desc">Console C++ app for managing student grades with file handling</div>
+          <div class="tags"><span>C++</span><span>File Handling</span><button class="mini-btn">Case Study →</button><a href="https://github.com/5121325001-Amna/Studentresultmanagementsystem" target="_blank" rel="noopener" class="mini-btn">⭐ View Code</a></div>
+        </div>
+      </div>
+      <div class="project-row reveal" data-project="portfolio" tabindex="0" role="button" aria-haspopup="dialog">
+        <div>
+          <div class="project-title">Personal Portfolio Website</div>
+          <div class="project-desc">This site — fully responsive with dark/light theme & animations</div>
+          <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><button class="mini-btn">Case Study →</button><a href="https://5121325001-amna.github.io/My-portfolio/" target="_blank" rel="noopener" class="mini-btn">⭐ View Live</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="eyebrow reveal">04 — Certifications</p>
+    <h2 class="reveal">Continuous Learning</h2>
+    <div class="cert-row">
+      <div class="cert-card reveal">Generative AI: Prompt Engineering<br><small>IBM</small></div>
+      <div class="cert-card reveal">Introduction to Software Engineering<br><small>IBM</small></div>
+      <div class="cert-card reveal">HTML, CSS &amp; JavaScript<br><small>IBM</small></div>
+      <div class="cert-card reveal">Cyber Security Manager<br><small>Macquarie University</small></div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <p class="eyebrow reveal">05 — Contact</p>
+    <h2 class="reveal">Let's Connect</h2>
+    <p class="reveal">Open to internships and collaborations. My inbox is always open.</p>
+    <div class="contact-grid reveal">
+      <a href="mailto:5121325001@student.iiui.edu.pk" class="contact-btn">
+        <span class="icon">✉️</span><div><strong>Email Me</strong><small>5121325001@student.iiui.edu.pk</small></div>
+      </a>
+      <a href="https://www.linkedin.com/in/amna-aqeel-64564a402" target="_blank" class="contact-btn">
+        <span class="icon">💼</span><div><strong>LinkedIn</strong><small>/in/amna-aqeel</small></div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer"><p>Designed &amp; Built by Amna Aqeel © 2026</p></footer>
+
+<div class="modal" id="projectModal" role="dialog" aria-modal="true">
+  <div class="modal-content">
+    <button class="close-modal" aria-label="Close">&times;</button>
+    <h3 id="modalTitle"></h3>
+    <p id="modalDesc"></p>
+    <div class="modal-meta">
+      <p><strong>Problem:</strong> <span id="modalProblem"></span></p>
+      <p><strong>Solution:</strong> <span id="modalSolution"></span></p>
+      <p><strong>Learnings:</strong> <span id="modalLearn"></span></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="cvModal" role="dialog" aria-modal="true">
+  <div class="modal-content cv-content">
+    <button class="close-modal" id="closeCV" aria-label="Close">&times;</button>
+    <div class="cv-toolbar">
+      <button class="mini-btn" id="editToggle">✎ Edit CV</button>
+      <button class="mini-btn" id="saveCV" style="display:none">💾 Save Changes</button>
+      <button class="mini-btn" id="resetCV">↺ Reset to Original</button>
+      <button class="mini-btn" id="exportCV">⬆ Export (.json)</button>
+      <label class="mini-btn" for="importFile">⬇ Import (.json)</label>
+      <input type="file" id="importFile" accept="application/json" style="display:none">
+      <a href="Amna_Aqeel_Resume.pdf" download class="mini-btn" style="text-decoration:none">⬇ Download PDF</a>
+    </div>
+    <p class="edit-hint" id="editHint">Click "Edit CV" to update this after adding new skills or certifications.</p>
+    <p class="edit-disclaimer">⚠ Edits save only to <strong>this browser</strong>. Use <strong>Export</strong> then <strong>Import</strong> to move between devices.</p>
+
+    <div class="cv-header">
+      <h2 contenteditable="false" id="cvName">Amna Aqeel</h2>
+      <p contenteditable="false" id="cvRole">Software Engineering Student @ IIUI</p>
+      <div class="cv-links">
+        <a href="mailto:5121325001@student.iiui.edu.pk">Email</a>
+        <span>•</span>
+        <a href="https://www.linkedin.com/in/amna-aqeel-64564a402" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="cv-section">
+      <h3>Education</h3>
+      <p contenteditable="false" id="cvEducation"><strong>BSE — IIUI</strong><br><span>CGPA: 4.0 | Expected 2029</span></p>
+    </div>
+    <div class="cv-section">
+      <h3>Technical Skills</h3>
+      <div class="cv-tags" contenteditable="false" id="cvSkills">
+        <span>Java</span><span>C++</span><span>OOP</span><span>HTML/CSS</span><span>JavaScript</span><span>DSA</span><span>DBMS</span><span>Git</span><span>GitHub</span><span>IntelliJ</span>
+      </div>
+    </div>
+    <div class="cv-section">
+      <h3>Projects</h3>
+      <div contenteditable="false" id="cvProjects">
+        <p><strong>GUI Banking Application</strong> — Core Java, OOP, Swing</p>
+        <p><strong>Student Record Management</strong> — C++, File Handling</p>
+        <p><strong>Personal Portfolio Website</strong> — HTML, CSS, JavaScript</p>
+      </div>
+    </div>
+    <div class="cv-section">
+      <h3>Certifications</h3>
+      <p contenteditable="false" id="cvCerts">Generative AI: Prompt Engineering (IBM) · Introduction to Software Engineering (IBM) · HTML, CSS &amp; JavaScript (IBM) · Cyber Security Manager (Macquarie University)</p>
+    </div>
+    <a href="https://www.linkedin.com/in/amna-aqeel-64564a402" target="_blank" class="btn btn-primary" style="width:100%; margin-top:20px">Message Me on LinkedIn</a>
+  </div>
+</div>
+
+<button class="btn btn-primary back-to-top" aria-label="Back to top">↑</button>
+<script src="script.js"></script>
+</body>
+</html>
