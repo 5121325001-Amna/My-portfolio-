@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="Amna Aqeel — Software Engineering student at IIUI. Java, C++, OOP & web development portfolio.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
 <title>Amna Aqeel | Software Engineering Student</title>
@@ -18,9 +18,9 @@
 
 <header class="navbar">
   <div class="nav-inner">
-    <a href="#" class="logo">AA</a>
+    <a href="#home" class="logo">AA</a>
 
-    <nav class="nav-links" id="navLinks">
+    <nav class="nav-links" id="navLinks"> <!-- FIX 1: id added -->
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
@@ -36,7 +36,7 @@
 </header>
 
 <main>
-  <section class="hero">
+  <section class="hero" id="home"> <!-- FIX: added id for logo link -->
     <p class="eyebrow reveal">Hi, my name is</p>
     <h1 class="hero-title reveal">Amna Aqeel.</h1>
     <p class="hero-desc reveal">Software Engineering student at IIUI. I specialize in Java, OOP, and creating intuitive applications.</p>
@@ -158,7 +158,7 @@
 
 <div class="modal" id="cvModal" role="dialog" aria-modal="true">
   <div class="modal-content cv-content">
-    <button class="close-modal" id="closeCV" aria-label="Close">&times;</button>
+    <button class="close-modal" aria-label="Close">&times;</button> <!-- FIX 2: removed id="closeCV" -->
     <div class="cv-toolbar">
       <button class="mini-btn" id="editToggle">✎ Edit CV</button>
       <button class="mini-btn" id="saveCV" style="display:none">💾 Save Changes</button>
