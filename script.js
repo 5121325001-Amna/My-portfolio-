@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
   document.querySelector('.loader').style.opacity = '0';
-  setTimeout(() => document.querySelector('.loader').style.display = 'none', 500);
+  setTimeout(() => document.querySelector('.loader').style.display = 'none', 400); // faster
 });
 
 const themeToggle = document.querySelector('.theme-toggle');
@@ -16,29 +16,29 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('theme', next);
 });
 
-// ========== HAMBURGER AUTO CLOSE ==========
+// HAMBURGER AUTO CLOSE
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
-
 function closeMobileMenu() { navLinks.classList.remove('active'); }
 document.querySelectorAll('.nav-links a').forEach(link => { link.addEventListener('click', closeMobileMenu); });
-window.addEventListener('scroll', closeMobileMenu); // closes on scroll
+window.addEventListener('scroll', closeMobileMenu);
 document.addEventListener('click', (e) => {
   if (!hamburger.contains(e.target) &&!navLinks.contains(e.target)) { closeMobileMenu(); }
 });
 
 const backToTop = document.querySelector('.back-to-top');
-window.addEventListener('scroll', () => {
-  backToTop.style.display = window.scrollY > 500? 'block' : 'none';
-});
+window.addEventListener('scroll', () => { backToTop.style.display = window.scrollY > 400? 'block' : 'none'; });
 backToTop.addEventListener('click', () => { window.scrollTo({top: 0, behavior: 'smooth'}); });
 
-document.addEventListener('mousemove', e => {
-  const glow = document.querySelector('.mouse-glow');
-  glow.style.left = e.clientX - 200 + 'px';
-  glow.style.top = e.clientY - 200 + 'px';
-});
+// Only run mouse glow on desktop for speed
+if(window.innerWidth > 768) {
+  document.addEventListener('mousemove', e => {
+    const glow = document.querySelector('.mouse-glow');
+    glow.style.left = e.clientX - 200 + 'px';
+    glow.style.top = e.clientY - 200 + 'px';
+  });
+}
 
 const terminal = document.getElementById('terminal');
 const terminalLines = ['$ whoami','Amna Aqeel','$ cat skills.txt','Java, C++, OOP, HTML, CSS, JavaScript','$ status','Open to Internships & Collaborations'];
@@ -46,13 +46,13 @@ let line = 0; let char = 0;
 function typeTerminal() {
   if (line < terminalLines.length) {
     if (char < terminalLines[line].length) {
-      terminal.innerHTML += terminalLines[line].charAt(char); char++; setTimeout(typeTerminal, 50);
-    } else { terminal.innerHTML += '<br>'; line++; char = 0; setTimeout(typeTerminal, 500); }
+      terminal.innerHTML += terminalLines[line].charAt(char); char++; setTimeout(typeTerminal, 40); // faster typing
+    } else { terminal.innerHTML += '<br>'; line++; char = 0; setTimeout(typeTerminal, 400); }
   }
 }
-setTimeout(typeTerminal, 1500);
+setTimeout(typeTerminal, 1000);
 
-// ========== CASE STUDY MODAL - AUTO CLOSE ==========
+// CASE STUDY MODAL
 const projectData = {
   banking: { title: "GUI Banking Application", desc: "A full-featured desktop banking system built with Core Java and Swing.", problem: "Needed a way to simulate real banking operations for OOP practice.", solution: "Built login, deposit, withdraw, and balance check using OOP principles and file handling.", learn: "Mastered Java Swing, OOP, and exception handling." },
   student: { title: "Student Record Management", desc: "Console-based C++ application for managing student data.", problem: "Manual record keeping was inefficient and error-prone.", solution: "Created CRUD operations with file handling to store data persistently.", learn: "Learned file I/O, structs, and modular programming in C++." },
@@ -75,24 +75,18 @@ function openProjectModal(key) {
   projectModal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
-
 document.querySelectorAll('.project-row').forEach(row => {
-  row.addEventListener('click', () => {
-    const key = row.dataset.project;
-    openProjectModal(key);
-  });
+  row.addEventListener('click', () => { openProjectModal(row.dataset.project); });
 });
-
 document.querySelectorAll('.close-modal').forEach(btn => { btn.addEventListener('click', closeAllModals); });
 projectModal.addEventListener('click', (e) => { if (e.target === projectModal) closeAllModals(); });
 cvModal.addEventListener('click', (e) => { if (e.target === cvModal) closeAllModals(); });
-window.addEventListener('scroll', () => { // closes case study on scroll
-  if (projectModal.style.display === 'flex') closeAllModals();
-});
+window.addEventListener('scroll', () => { if (projectModal.style.display === 'flex') closeAllModals(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAllModals(); });
 
+// ========== CV MODAL - FIXED ==========
 const cvModal = document.getElementById('cvModal');
-const openCV = document.getElementById('openCV');
+const openCV = document.getElementById('openCV'); // This is "View CV" button
 const editToggle = document.getElementById('editToggle');
 const saveCV = document.getElementById('saveCV');
 const resetCV = document.getElementById('resetCV');
@@ -104,7 +98,7 @@ window.addEventListener('load', () => {
   cvElements.forEach(id => { originalCV[id] = document.getElementById(id).innerHTML; });
   loadCVFromStorage();
 });
-openCV.addEventListener('click', () => {cvModal.style.display = 'flex'; document.body.style.overflow = 'hidden';});
+openCV.addEventListener('click', () => {cvModal.style.display = 'flex'; document.body.style.overflow = 'hidden';}); // Opens modal
 
 let isEditing = false;
 editToggle.addEventListener('click', () => {
@@ -145,9 +139,10 @@ importFile.addEventListener('change', (e) => {
   reader.readAsText(file);
 });
 
+// SCROLL ANIMATIONS
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => {
-  el.style.opacity = '0'; el.style.transform = 'translateY(30px)'; el.style.transition = 'all 0.6s ease'; observer.observe(el);
+  el.style.opacity = '0'; el.style.transform = 'translateY(30px)'; el.style.transition = 'all 0.5s ease'; observer.observe(el);
 });
