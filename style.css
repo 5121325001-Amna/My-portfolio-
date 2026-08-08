@@ -4,7 +4,7 @@
 }
 :root[data-theme="light"] {
   --bg: #ffffff; --bg-elev: #f8f8f8; --text: #111; --text-muted: #555;
-  --accent: #ffc0cb; /* FIX: same pink now */
+  --accent: #ff8fab; /* Slightly darker pink for light mode */
   --border: rgba(0, 0, 0, 0.08); --card: rgba(0, 0, 0, 0.03);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
