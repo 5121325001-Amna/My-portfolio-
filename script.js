@@ -16,11 +16,16 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('theme', next);
 });
 
+// ========== HAMBURGER AUTO CLOSE ==========
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => { navLinks.classList.remove('active'); });
+
+function closeMobileMenu() { navLinks.classList.remove('active'); }
+document.querySelectorAll('.nav-links a').forEach(link => { link.addEventListener('click', closeMobileMenu); });
+window.addEventListener('scroll', closeMobileMenu); // closes on scroll
+document.addEventListener('click', (e) => {
+  if (!hamburger.contains(e.target) &&!navLinks.contains(e.target)) { closeMobileMenu(); }
 });
 
 const backToTop = document.querySelector('.back-to-top');
@@ -47,6 +52,7 @@ function typeTerminal() {
 }
 setTimeout(typeTerminal, 1500);
 
+// ========== CASE STUDY MODAL - AUTO CLOSE ==========
 const projectData = {
   banking: { title: "GUI Banking Application", desc: "A full-featured desktop banking system built with Core Java and Swing.", problem: "Needed a way to simulate real banking operations for OOP practice.", solution: "Built login, deposit, withdraw, and balance check using OOP principles and file handling.", learn: "Mastered Java Swing, OOP, and exception handling." },
   student: { title: "Student Record Management", desc: "Console-based C++ application for managing student data.", problem: "Manual record keeping was inefficient and error-prone.", solution: "Created CRUD operations with file handling to store data persistently.", learn: "Learned file I/O, structs, and modular programming in C++." },
@@ -54,34 +60,39 @@ const projectData = {
 };
 
 const projectModal = document.getElementById('projectModal');
+function closeAllModals() {
+  projectModal.style.display = 'none';
+  cvModal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+function openProjectModal(key) {
+  const data = projectData[key];
+  document.getElementById('modalTitle').textContent = data.title;
+  document.getElementById('modalDesc').textContent = data.desc;
+  document.getElementById('modalProblem').textContent = data.problem;
+  document.getElementById('modalSolution').textContent = data.solution;
+  document.getElementById('modalLearn').textContent = data.learn;
+  projectModal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
 document.querySelectorAll('.project-row').forEach(row => {
   row.addEventListener('click', () => {
     const key = row.dataset.project;
-    const data = projectData[key];
-    document.getElementById('modalTitle').textContent = data.title;
-    document.getElementById('modalDesc').textContent = data.desc;
-    document.getElementById('modalProblem').textContent = data.problem;
-    document.getElementById('modalSolution').textContent = data.solution;
-    document.getElementById('modalLearn').textContent = data.learn;
-    projectModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // prevent scroll behind
+    openProjectModal(key);
   });
 });
 
-// FIX: close modal properly
-document.querySelectorAll('.close-modal').forEach(btn => {
-  btn.addEventListener('click', () => {
-    projectModal.style.display = 'none';
-    cvModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  });
+document.querySelectorAll('.close-modal').forEach(btn => { btn.addEventListener('click', closeAllModals); });
+projectModal.addEventListener('click', (e) => { if (e.target === projectModal) closeAllModals(); });
+cvModal.addEventListener('click', (e) => { if (e.target === cvModal) closeAllModals(); });
+window.addEventListener('scroll', () => { // closes case study on scroll
+  if (projectModal.style.display === 'flex') closeAllModals();
 });
-projectModal.addEventListener('click', (e) => {
-  if (e.target === projectModal) {projectModal.style.display = 'none'; document.body.style.overflow = 'auto';}
-});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAllModals(); });
 
 const cvModal = document.getElementById('cvModal');
-const openCV = document.getElementById('openCV'); // FIX: this was failing before
+const openCV = document.getElementById('openCV');
 const editToggle = document.getElementById('editToggle');
 const saveCV = document.getElementById('saveCV');
 const resetCV = document.getElementById('resetCV');
@@ -94,7 +105,6 @@ window.addEventListener('load', () => {
   loadCVFromStorage();
 });
 openCV.addEventListener('click', () => {cvModal.style.display = 'flex'; document.body.style.overflow = 'hidden';});
-cvModal.addEventListener('click', (e) => { if (e.target === cvModal) {cvModal.style.display = 'none'; document.body.style.overflow = 'auto';}});
 
 let isEditing = false;
 editToggle.addEventListener('click', () => {
